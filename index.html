@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jurnal Harian Magang - PT Nale System Integrator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-shadow {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .hover-scale:hover {
+            transform: scale(1.05);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+        }
+        
+        .success-message {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+        
+        .error-message {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg">
+    <!-- Header -->
+    <header class="glass-effect shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex flex-col sm:flex-row items-center justify-between">
+                <div class="flex items-center space-x-3 mb-3 sm:mb-0">
+                    <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center overflow-hidden">
+                        <img src="https://iili.io/FP7vua4.md.png" alt="Profile" class="w-full h-full object-cover rounded-full" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';">
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-white">Jurnal Harian Magang</h1>
+                        <p class="text-purple-200 text-xs">PT Nale System Integrator × Polinema</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6">
+        <!-- Welcome Section -->
+        <section id="welcomeSection" class="fade-in">
+            <div class="max-w-3xl mx-auto text-center">
+                <div class="glass-effect rounded-3xl p-6 card-shadow mb-6">
+                    <h2 class="text-3xl font-bold text-white mb-3">Selamat Datang</h2>
+                    <p class="text-purple-200 text-base mb-6">Pilih opsi di bawah untuk melanjutkan</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <button id="viewRecapBtn" class="glass-effect rounded-2xl p-5 hover-scale hover-lift transition-all duration-300 group">
+                            <div class="text-3xl mb-3 group-hover:pulse-animation">📊</div>
+                            <h3 class="text-lg font-bold text-white mb-2">Lihat Rekap Jurnal</h3>
+                            <p class="text-purple-200 text-sm">Akses publik untuk melihat semua jurnal</p>
+                        </button>
+                        
+                        <button id="loginBtn" class="glass-effect rounded-2xl p-5 hover-scale hover-lift transition-all duration-300 group">
+                            <div class="text-3xl mb-3 group-hover:pulse-animation">🔐</div>
+                            <h3 class="text-lg font-bold text-white mb-2">Login Mahasiswa</h3>
+                            <p class="text-purple-200 text-sm">Masuk untuk mengisi jurnal harian</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Section -->
+        <section id="loginSection" class="hidden fade-in">
+            <div class="max-w-sm mx-auto">
+                <div class="glass-effect rounded-3xl p-6 card-shadow">
+                    <div class="text-center mb-5">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-3 floating">
+                            <span class="text-2xl">🔐</span>
+                        </div>
+                        <h2 class="text-xl font-bold text-white mb-2">Login Mahasiswa</h2>
+                        <p class="text-purple-200 text-sm">Masukkan kredensial Anda</p>
+                    </div>
+                    
+                    <form id="loginForm">
+                        <div class="mb-4">
+                            <label class="block text-white font-semibold mb-2">Username</label>
+                            <input type="text" id="username" class="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-purple-200 focus:outline-none focus:ring-2 focus:ring-white/50" placeholder="Masukkan username" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-white font-semibold mb-2">Password</label>
+                            <input type="password" id="password" class="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-purple-200 focus:outline-none focus:ring-2 focus:ring-white/50" placeholder="Masukkan password" required>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-white text-purple-600 font-bold py-3 rounded-xl hover-scale transition-all duration-300 mb-4">
+                            Masuk
+                        </button>
+                        
+                        <button type="button" id="backToWelcomeFromLogin" class="w-full glass-effect text-white font-semibold py-3 rounded-xl hover-lift transition-all duration-300">
+                            Kembali
+                        </button>
+                    </form>
+                    
+                    <div id="loginError" class="hidden mt-4 p-3 rounded-xl error-message text-white text-center"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Journal Entry Section -->
+        <section id="journalSection" class="hidden fade-in">
+            <div class="max-w-xl mx-auto">
+                <div class="glass-effect rounded-3xl p-6 card-shadow">
+                    <div class="text-center mb-5">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-3 floating">
+                            <span class="text-2xl">📝</span>
+                        </div>
+                        <h2 class="text-xl font-bold text-white mb-2">Isi Jurnal Harian</h2>
+                        <p class="text-purple-200 text-sm">Dokumentasikan kegiatan magang Anda</p>
+                    </div>
+                    
+                    <form id="journalForm">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                            <div class="flex-1">
+                                <label class="block text-white font-semibold mb-2">Tanggal</label>
+                                <input type="date" id="journalDate" class="w-full h-12 px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-white/50" required>
+                            </div>
+                            
+                            <div class="flex-1">
+                                <label class="block text-white font-semibold mb-2">Bulan</label>
+                                <select id="journalMonth" class="w-full h-12 px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white focus:outline-none focus:ring-2 focus:ring-white/50" required>
+                                    <option value="" style="background-color: #6b46c1; color: white;">Pilih Bulan</option>
+                                    <option value="Juli" style="background-color: #6b46c1; color: white;">Juli</option>
+                                    <option value="Agustus" style="background-color: #6b46c1; color: white;">Agustus</option>
+                                    <option value="September" style="background-color: #6b46c1; color: white;">September</option>
+                                    <option value="Oktober" style="background-color: #6b46c1; color: white;">Oktober</option>
+                                    <option value="November" style="background-color: #6b46c1; color: white;">November</option>
+                                    <option value="Desember" style="background-color: #6b46c1; color: white;">Desember</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-white font-semibold mb-2">Tempat</label>
+                            <input type="text" id="journalPlace" class="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-purple-200 focus:outline-none focus:ring-2 focus:ring-white/50" placeholder="Contoh: PT Nale System Integrator" required>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-white font-semibold mb-2">Uraian Kegiatan</label>
+                            <textarea id="journalActivity" rows="4" class="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-purple-200 focus:outline-none focus:ring-2 focus:ring-white/50" placeholder="Deskripsikan kegiatan yang dilakukan hari ini..." required></textarea>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label class="block text-white font-semibold mb-2">Catatan Tambahan (Opsional)</label>
+                            <textarea id="journalNotes" rows="3" class="w-full px-4 py-3 rounded-xl bg-white/20 border border-white/30 text-white placeholder-purple-200 focus:outline-none focus:ring-2 focus:ring-white/50" placeholder="Catatan atau refleksi tambahan..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-white text-purple-600 font-bold py-3 rounded-xl hover-scale transition-all duration-300 mb-4">
+                            Simpan Jurnal
+                        </button>
+                        
+
+                    </form>
+                    
+                    <div class="text-center">
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <button type="button" id="viewRecapFromJournal" class="glass-effect text-white font-semibold px-8 py-3 rounded-xl hover-lift transition-all duration-300">
+                                Lihat Rekap
+                            </button>
+                            
+                            <button type="button" id="logoutBtn" class="glass-effect text-white font-semibold px-8 py-3 rounded-xl hover-lift transition-all duration-300">
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="journalMessage" class="hidden mt-4 p-3 rounded-xl text-white text-center"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recap Section -->
+        <section id="recapSection" class="hidden fade-in">
+            <div class="max-w-7xl mx-auto">
+                <div class="glass-effect rounded-3xl p-6 card-shadow">
+                    <div class="text-center mb-6">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mx-auto mb-3 floating">
+                            <span class="text-2xl">📊</span>
+                        </div>
+                        <h2 class="text-xl font-bold text-white mb-2">Rekap Jurnal Harian</h2>
+                        <p class="text-purple-200 text-sm">Dokumentasi kegiatan magang per bulan</p>
+                    </div>
+                    
+                    <!-- Month Tabs -->
+                    <div class="mb-6">
+                        <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 max-w-4xl mx-auto">
+                            <button class="month-tab px-3 py-2 rounded-lg glass-effect text-white font-semibold hover-scale transition-all duration-300 text-center" data-month="Juli">
+                                <div class="text-xs font-bold mb-1">Juli</div>
+                                <span class="month-count bg-white text-purple-600 px-1.5 py-0.5 rounded-full text-xs">0</span>
+                            </button>
+                            <button class="month-tab px-3 py-2 rounded-lg glass-effect text-white font-semibold hover-scale transition-all duration-300 text-center" data-month="Agustus">
+                                <div class="text-xs font-bold mb-1">Agustus</div>
+                                <span class="month-count bg-white text-purple-600 px-1.5 py-0.5 rounded-full text-xs">0</span>
+                            </button>
+                            <button class="month-tab px-3 py-2 rounded-lg glass-effect text-white font-semibold hover-scale transition-all duration-300 text-center" data-month="September">
+                                <div class="text-xs font-bold mb-1">September</div>
+                                <span class="month-count bg-white text-purple-600 px-1.5 py-0.5 rounded-full text-xs">0</span>
+                            </button>
+                            <button class="month-tab px-3 py-2 rounded-lg glass-effect text-white font-semibold hover-scale transition-all duration-300 text-center" data-month="Oktober">
+                                <div class="text-xs font-bold mb-1">Oktober</div>
+                                <span class="month-count bg-white text-purple-600 px-1.5 py-0.5 rounded-full text-xs">0</span>
+                            </button>
+                            <button class="month-tab px-3 py-2 rounded-lg glass-effect text-white font-semibold hover-scale transition-all duration-300 text-center" data-month="November">
+                                <div class="text-xs font-bold mb-1">November</div>
+                                <span class="month-count bg-white text-purple-600 px-1.5 py-0.5 rounded-full text-xs">0</span>
+                            </button>
+                            <button class="month-tab px-3 py-2 rounded-lg glass-effect text-white font-semibold hover-scale transition-all duration-300 text-center" data-month="Desember">
+                                <div class="text-xs font-bold mb-1">Desember</div>
+                                <span class="month-count bg-white text-purple-600 px-1.5 py-0.5 rounded-full text-xs">0</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Journal Entries Table -->
+                    <div id="journalEntries" class="overflow-x-auto">
+                        <div class="text-center text-white py-8">
+                            <div class="text-6xl mb-4">📝</div>
+                            <p class="text-xl">Pilih bulan untuk melihat jurnal</p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-8">
+                        <div id="loggedInButtons" class="flex flex-col sm:flex-row gap-4 justify-center" style="display: none;">
+                            <button id="backToJournalFromRecap" class="glass-effect text-white font-semibold px-8 py-3 rounded-xl hover-lift transition-all duration-300">
+                                Kembali ke Pengisian
+                            </button>
+                            <button id="logoutFromRecap" class="glass-effect text-white font-semibold px-8 py-3 rounded-xl hover-lift transition-all duration-300">
+                                Logout
+                            </button>
+                        </div>
+                        <div id="publicButtons" class="flex justify-center">
+                            <button id="backToWelcomeFromRecap" class="glass-effect text-white font-semibold px-8 py-3 rounded-xl hover-lift transition-all duration-300">
+                                Kembali ke Beranda
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-effect mt-12">
+        <div class="container mx-auto px-4 py-4 text-center">
+            <p class="text-purple-200 text-sm">&copy; 2025 Wahyu Putra Nurrahman</p>
+        </div>
+    </footer>
+
+    <script>
+        // Global variables
+        let journalEntries = [];
+        let submittedDates = [];
+        let isLoggedIn = false;
+        
+        // Google Sheets database connection
+        const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyhv5MJQxTsjaSMjM__h9MYtRxqdB2aQCelkqpFT5_yaxQ-ntfwB9z0CKKlQhoAh2cUpQ/exec';
+        
+        // Test connection function
+        async function testConnection() {
+            try {
+                console.log('Testing connection to Google Sheets...');
+                const response = await fetch(GOOGLE_SHEETS_URL + '?action=read');
+                const result = await response.text();
+                console.log('Test response:', result);
+                return response.ok;
+            } catch (error) {
+                console.error('Connection test failed:', error);
+                return false;
+            }
+        }
+
+        // DOM elements
+        const welcomeSection = document.getElementById('welcomeSection');
+        const loginSection = document.getElementById('loginSection');
+        const journalSection = document.getElementById('journalSection');
+        const recapSection = document.getElementById('recapSection');
+
+        // Load data from Google Sheets
+        async function loadDataFromDatabase() {
+            // Always load from localStorage first to ensure data persistence
+            const localEntries = JSON.parse(localStorage.getItem('journalEntries')) || [];
+            const localDates = JSON.parse(localStorage.getItem('submittedDates')) || [];
+            
+            try {
+                console.log('Loading data from Google Sheets...');
+                
+                const response = await fetch(GOOGLE_SHEETS_URL + '?action=read', {
+                    method: 'GET'
+                });
+                
+                if (response.ok) {
+                    const result = await response.text();
+                    console.log('Google Sheets response:', result);
+                    
+                    if (result && result !== 'null' && result !== '' && result !== '[]') {
+                        try {
+                            const data = JSON.parse(result);
+                            console.log('Parsed data:', data);
+                            
+                            let remoteEntries = [];
+                            if (data && data.data && Array.isArray(data.data)) {
+                                remoteEntries = data.data;
+                            } else if (Array.isArray(data)) {
+                                remoteEntries = data;
+                            }
+                            
+                            // Merge local and remote data, prioritizing local data
+                            const mergedEntries = [...localEntries];
+                            const localIds = localEntries.map(entry => entry.id);
+                            
+                            // Add remote entries that don't exist locally
+                            remoteEntries.forEach(remoteEntry => {
+                                if (!localIds.includes(remoteEntry.id)) {
+                                    mergedEntries.push(remoteEntry);
+                                }
+                            });
+                            
+                            journalEntries = mergedEntries;
+                            submittedDates = journalEntries.map(entry => entry.date);
+                            console.log('Merged entries:', journalEntries.length);
+                        } catch (parseError) {
+                            console.log('Could not parse response as JSON:', parseError);
+                            // Use local data if remote parsing fails
+                            journalEntries = localEntries;
+                            submittedDates = localDates;
+                        }
+                    } else {
+                        console.log('Empty or null response from Google Sheets, using local data');
+                        journalEntries = localEntries;
+                        submittedDates = localDates;
+                    }
+                } else {
+                    throw new Error('Failed to fetch from Google Sheets: ' + response.status);
+                }
+                
+                // Always save merged data to localStorage
+                localStorage.setItem('journalEntries', JSON.stringify(journalEntries));
+                localStorage.setItem('submittedDates', JSON.stringify(submittedDates));
+                
+                updateRecapDisplay();
+                
+            } catch (error) {
+                console.error('Error loading from Google Sheets:', error);
+                // Always fallback to localStorage to preserve data
+                journalEntries = localEntries;
+                submittedDates = localDates;
+                console.log('Using localStorage data, entries:', journalEntries.length);
+                updateRecapDisplay();
+            }
+        }
+        
+        // Save data to Google Sheets
+        async function saveDataToDatabase(entry) {
+            try {
+                console.log('Saving data to Google Sheets:', entry);
+                
+                // Format data untuk Google Sheets
+                const formData = new FormData();
+                formData.append('action', 'write');
+                formData.append('id', entry.id);
+                formData.append('date', entry.date);
+                formData.append('month', entry.month);
+                formData.append('place', entry.place);
+                formData.append('activity', entry.activity);
+                formData.append('notes', entry.notes || '');
+                formData.append('timestamp', entry.timestamp);
+                
+                const response = await fetch(GOOGLE_SHEETS_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const result = await response.text();
+                    console.log('Google Sheets save response:', result);
+                    
+                    // Check for success indicators
+                    if (result.includes('success') || result.includes('Success') || result.includes('added') || result.includes('OK')) {
+                        console.log('Data saved to Google Sheets successfully');
+                        
+                        // Add to local arrays
+                        journalEntries.push(entry);
+                        submittedDates.push(entry.date);
+                        
+                        // Also save to localStorage as backup
+                        localStorage.setItem('journalEntries', JSON.stringify(journalEntries));
+                        localStorage.setItem('submittedDates', JSON.stringify(submittedDates));
+                        
+                        return true;
+                    } else {
+                        console.log('Unexpected response from Google Sheets:', result);
+                        return false;
+                    }
+                } else {
+                    throw new Error('HTTP error: ' + response.status);
+                }
+                
+            } catch (error) {
+                console.error('Error saving to Google Sheets:', error);
+                return false;
+            }
+        }
+        
+        // Delete data from Google Sheets
+        async function deleteDataFromDatabase(entryId) {
+            try {
+                console.log('Deleting data from Google Sheets:', entryId);
+                
+                const response = await fetch(GOOGLE_SHEETS_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'delete',
+                        id: entryId
+                    })
+                });
+                
+                if (response.ok) {
+                    const result = await response.text();
+                    console.log('Delete response from Google Sheets:', result);
+                    
+                    if (result.includes('success') || result.includes('Success') || result.includes('deleted')) {
+                        console.log('Data deleted from Google Sheets successfully');
+                        
+                        // Remove from local arrays
+                        const entryIndex = journalEntries.findIndex(entry => entry.id == entryId);
+                        if (entryIndex > -1) {
+                            const entry = journalEntries[entryIndex];
+                            journalEntries.splice(entryIndex, 1);
+                            
+                            const dateIndex = submittedDates.indexOf(entry.date);
+                            if (dateIndex > -1) {
+                                submittedDates.splice(dateIndex, 1);
+                            }
+                        }
+                        
+                        // Update localStorage
+                        localStorage.setItem('journalEntries', JSON.stringify(journalEntries));
+                        localStorage.setItem('submittedDates', JSON.stringify(submittedDates));
+                        
+                        return true;
+                    } else {
+                        throw new Error('Google Sheets returned error: ' + result);
+                    }
+                } else {
+                    throw new Error('HTTP error: ' + response.status);
+                }
+                
+            } catch (error) {
+                console.error('Error deleting from Google Sheets:', error);
+                return false;
+            }
+        }
+
+        // Load data from localStorage (fallback)
+        function loadData() {
+            journalEntries = JSON.parse(localStorage.getItem('journalEntries')) || [];
+            submittedDates = JSON.parse(localStorage.getItem('submittedDates')) || [];
+            updateRecapDisplay();
+        }
+
+        // Save data to localStorage (backup)
+        function saveData() {
+            localStorage.setItem('journalEntries', JSON.stringify(journalEntries));
+            localStorage.setItem('submittedDates', JSON.stringify(submittedDates));
+        }
+
+        // Navigation functions
+        function showSection(sectionToShow) {
+            [welcomeSection, loginSection, journalSection, recapSection].forEach(section => {
+                section.classList.add('hidden');
+            });
+            sectionToShow.classList.remove('hidden');
+            sectionToShow.classList.add('fade-in');
+        }
+
+        function showLoginForm() {
+            showSection(loginSection);
+        }
+
+        function showPublicRecap() {
+            isLoggedIn = false; // Ensure public access
+            showSection(recapSection);
+            loadDataFromDatabase(); // Refresh data when viewing recap
+            // Show only public buttons
+            document.getElementById('loggedInButtons').style.display = 'none';
+            document.getElementById('publicButtons').style.display = 'flex';
+        }
+
+        function showJournalForm() {
+            showSection(journalSection);
+            // Set today's date as default
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('journalDate').value = today;
+        }
+
+        function backToWelcome() {
+            showSection(welcomeSection);
+            isLoggedIn = false;
+        }
+
+        // Login functionality
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            if (username === 'WAHYU' && password === '1234567890') {
+                isLoggedIn = true;
+                showJournalForm();
+                // Clear form
+                document.getElementById('loginForm').reset();
+                errorDiv.classList.add('hidden');
+            } else {
+                errorDiv.textContent = 'Username atau password salah!';
+                errorDiv.classList.remove('hidden');
+                setTimeout(() => {
+                    errorDiv.classList.add('hidden');
+                }, 3000);
+            }
+        });
+
+        // Journal form functionality
+        document.getElementById('journalForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const date = document.getElementById('journalDate').value;
+            const month = document.getElementById('journalMonth').value;
+            const place = document.getElementById('journalPlace').value;
+            const activity = document.getElementById('journalActivity').value;
+            const notes = document.getElementById('journalNotes').value;
+            const messageDiv = document.getElementById('journalMessage');
+            
+            // Check if date already submitted
+            if (submittedDates.includes(date)) {
+                messageDiv.textContent = 'Jurnal untuk tanggal ini sudah pernah diisi!';
+                messageDiv.className = 'mt-4 p-3 rounded-xl error-message text-white text-center';
+                messageDiv.classList.remove('hidden');
+                setTimeout(() => {
+                    messageDiv.classList.add('hidden');
+                }, 3000);
+                return;
+            }
+            
+            // Show loading message
+            messageDiv.textContent = 'Menyimpan jurnal...';
+            messageDiv.className = 'mt-4 p-3 rounded-xl glass-effect text-white text-center';
+            messageDiv.classList.remove('hidden');
+            
+            // Create new journal entry
+            const newEntry = {
+                id: Date.now(),
+                date: date,
+                month: month,
+                place: place,
+                activity: activity,
+                notes: notes,
+                timestamp: new Date().toISOString()
+            };
+            
+            try {
+                // Save to Google Sheets first
+                const databaseSaved = await saveDataToDatabase(newEntry);
+                
+                if (databaseSaved) {
+                    // Update display
+                    updateRecapDisplay();
+                    
+                    // Show success message
+                    messageDiv.textContent = 'Jurnal berhasil disimpan ke Google Sheets!';
+                    messageDiv.className = 'mt-4 p-3 rounded-xl success-message text-white text-center';
+                } else {
+                    throw new Error('Failed to save to database');
+                }
+                
+                // Reset form
+                document.getElementById('journalForm').reset();
+                
+            } catch (error) {
+                console.error('Error saving journal:', error);
+                
+                // Fallback: save locally only
+                journalEntries.push(newEntry);
+                submittedDates.push(date);
+                localStorage.setItem('journalEntries', JSON.stringify(journalEntries));
+                localStorage.setItem('submittedDates', JSON.stringify(submittedDates));
+                
+                // Update display
+                updateRecapDisplay();
+                
+                // Show success message (local save still works)
+                messageDiv.textContent = 'Jurnal berhasil disimpan (tersimpan lokal)!';
+                messageDiv.className = 'mt-4 p-3 rounded-xl success-message text-white text-center';
+                
+                // Reset form
+                document.getElementById('journalForm').reset();
+            }
+            
+            // Hide message after 3 seconds
+            setTimeout(() => {
+                messageDiv.classList.add('hidden');
+            }, 3000);
+        });
+
+        // Recap functionality
+        function updateRecapDisplay() {
+            const months = ['Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+            
+            // Update month counts
+            months.forEach(month => {
+                const count = journalEntries.filter(entry => entry.month === month).length;
+                const tab = document.querySelector(`[data-month="${month}"]`);
+                const countSpan = tab.querySelector('.month-count');
+                countSpan.textContent = count;
+            });
+        }
+
+        function showMonthEntries(month) {
+            const entriesContainer = document.getElementById('journalEntries');
+            const monthEntries = journalEntries.filter(entry => entry.month === month)
+                .sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            if (monthEntries.length === 0) {
+                entriesContainer.innerHTML = `
+                    <div class="text-center text-white py-8">
+                        <div class="text-6xl mb-4">📝</div>
+                        <p class="text-xl">Belum ada jurnal untuk bulan ${month}</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let tableHTML = `
+                <div class="glass-effect rounded-2xl overflow-hidden">
+                    <div class="bg-white/20 px-4 py-3">
+                        <h3 class="text-lg font-bold text-white">Jurnal Bulan ${month}</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead class="bg-white/10">
+                                <tr>
+                                    <th class="px-3 py-2 text-left text-white font-semibold text-xs">Hari/Tanggal</th>
+                                    <th class="px-3 py-2 text-left text-white font-semibold text-xs">Bulan</th>
+                                    <th class="px-3 py-2 text-left text-white font-semibold text-xs">Tempat</th>
+                                    <th class="px-3 py-2 text-left text-white font-semibold text-xs">Uraian Kegiatan</th>
+                                    <th class="px-3 py-2 text-left text-white font-semibold text-xs">Catatan</th>
+                                    ${isLoggedIn ? '<th class="px-3 py-2 text-center text-white font-semibold text-xs">Aksi</th>' : ''}
+                                </tr>
+                            </thead>
+                            <tbody>
+            `;
+            
+            monthEntries.forEach((entry, index) => {
+                const dateObj = new Date(entry.date);
+                const dayNames = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                const dayName = dayNames[dateObj.getDay()];
+                const formattedDate = `${dayName}, ${dateObj.getDate()}/${dateObj.getMonth() + 1}/${dateObj.getFullYear()}`;
+                
+                tableHTML += `
+                    <tr class="border-b border-white/10 hover:bg-white/5 transition-colors duration-200">
+                        <td class="px-3 py-2 text-white text-xs">${formattedDate}</td>
+                        <td class="px-3 py-2 text-purple-200 text-xs">${entry.month}</td>
+                        <td class="px-3 py-2 text-purple-200 text-xs">${entry.place}</td>
+                        <td class="px-3 py-2 text-purple-200 text-xs">${entry.activity}</td>
+                        <td class="px-3 py-2 text-purple-200 text-xs">${entry.notes || '-'}</td>
+                        ${isLoggedIn ? `
+                            <td class="px-3 py-2 text-center">
+                                <button onclick="deleteEntry(${entry.id})" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs hover-scale transition-all duration-300">
+                                    Hapus
+                                </button>
+                            </td>
+                        ` : ''}
+                    </tr>
+                `;
+            });
+            
+            tableHTML += `
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            
+            entriesContainer.innerHTML = tableHTML;
+        }
+
+        function deleteEntry(entryId) {
+            // Create custom confirmation dialog
+            const confirmDialog = document.createElement('div');
+            confirmDialog.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            confirmDialog.innerHTML = `
+                <div class="glass-effect rounded-2xl p-6 max-w-sm mx-4">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">⚠️</div>
+                        <h3 class="text-lg font-bold text-white mb-3">Konfirmasi Hapus</h3>
+                        <p class="text-purple-200 mb-6">Apakah Anda yakin ingin menghapus jurnal ini?</p>
+                        <div class="flex gap-3">
+                            <button id="cancelDelete" class="flex-1 glass-effect text-white font-semibold py-2 px-4 rounded-xl hover-lift transition-all duration-300">
+                                Batal
+                            </button>
+                            <button id="confirmDelete" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-xl hover-scale transition-all duration-300">
+                                Hapus
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(confirmDialog);
+            
+            // Handle cancel
+            document.getElementById('cancelDelete').addEventListener('click', function() {
+                document.body.removeChild(confirmDialog);
+            });
+            
+            // Handle confirm delete
+            document.getElementById('confirmDelete').addEventListener('click', async function() {
+                // Find and remove entry
+                const entryIndex = journalEntries.findIndex(entry => entry.id === entryId);
+                if (entryIndex > -1) {
+                    const entry = journalEntries[entryIndex];
+                    
+                    try {
+                        // Delete from Google Sheets first
+                        const databaseDeleted = await deleteDataFromDatabase(entryId);
+                        
+                        if (databaseDeleted) {
+                            // Remove from local arrays
+                            journalEntries.splice(entryIndex, 1);
+                            const dateIndex = submittedDates.indexOf(entry.date);
+                            if (dateIndex > -1) {
+                                submittedDates.splice(dateIndex, 1);
+                            }
+                            
+                            // Update localStorage
+                            localStorage.setItem('journalEntries', JSON.stringify(journalEntries));
+                            localStorage.setItem('submittedDates', JSON.stringify(submittedDates));
+                            
+                            // Show success message
+                            const successMsg = document.createElement('div');
+                            successMsg.className = 'fixed top-4 right-4 success-message text-white px-4 py-2 rounded-xl z-50';
+                            successMsg.textContent = 'Jurnal berhasil dihapus dari Google Sheets!';
+                            document.body.appendChild(successMsg);
+                            
+                            setTimeout(() => {
+                                if (document.body.contains(successMsg)) {
+                                    document.body.removeChild(successMsg);
+                                }
+                            }, 3000);
+                        } else {
+                            throw new Error('Failed to delete from database');
+                        }
+                    } catch (error) {
+                        console.error('Error deleting from database:', error);
+                        
+                        // Fallback: delete locally only
+                        journalEntries.splice(entryIndex, 1);
+                        const dateIndex = submittedDates.indexOf(entry.date);
+                        if (dateIndex > -1) {
+                            submittedDates.splice(dateIndex, 1);
+                        }
+                        
+                        // Update localStorage
+                        localStorage.setItem('journalEntries', JSON.stringify(journalEntries));
+                        localStorage.setItem('submittedDates', JSON.stringify(submittedDates));
+                        
+                        // Show success message (local delete still works)
+                        const successMsg = document.createElement('div');
+                        successMsg.className = 'fixed top-4 right-4 success-message text-white px-4 py-2 rounded-xl z-50';
+                        successMsg.textContent = 'Jurnal berhasil dihapus (lokal)!';
+                        document.body.appendChild(successMsg);
+                        
+                        setTimeout(() => {
+                            if (document.body.contains(successMsg)) {
+                                document.body.removeChild(successMsg);
+                            }
+                        }, 3000);
+                    }
+                    
+                    // Refresh display
+                    updateRecapDisplay();
+                    const activeTab = document.querySelector('.month-tab.bg-white, .month-tab.text-purple-600');
+                    if (activeTab) {
+                        const month = activeTab.dataset.month;
+                        showMonthEntries(month);
+                    }
+                }
+                
+                // Remove confirmation dialog
+                document.body.removeChild(confirmDialog);
+            });
+        }
+
+        // Event listeners
+        document.getElementById('viewRecapBtn').addEventListener('click', showPublicRecap);
+        document.getElementById('loginBtn').addEventListener('click', showLoginForm);
+        document.getElementById('backToWelcomeFromLogin').addEventListener('click', backToWelcome);
+        document.getElementById('logoutBtn').addEventListener('click', backToWelcome);
+        document.getElementById('viewRecapFromJournal').addEventListener('click', function() {
+            showSection(recapSection);
+            loadDataFromDatabase(); // Refresh data when viewing recap
+            // Show login-specific buttons for logged in users
+            document.getElementById('loggedInButtons').style.display = 'flex';
+            document.getElementById('publicButtons').style.display = 'none';
+        });
+        document.getElementById('backToJournalFromRecap').addEventListener('click', function() {
+            if (isLoggedIn) {
+                showJournalForm();
+            } else {
+                backToWelcome();
+            }
+        });
+        document.getElementById('logoutFromRecap').addEventListener('click', backToWelcome);
+        document.getElementById('backToWelcomeFromRecap').addEventListener('click', backToWelcome);
+
+        // Month tab event listeners
+        document.querySelectorAll('.month-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active state from all tabs
+                document.querySelectorAll('.month-tab').forEach(t => {
+                    t.classList.remove('bg-white', 'text-purple-600');
+                    t.classList.add('glass-effect', 'text-white');
+                });
+                
+                // Add active state to clicked tab
+                this.classList.remove('glass-effect', 'text-white');
+                this.classList.add('bg-white', 'text-purple-600');
+                
+                // Show entries for selected month
+                const month = this.dataset.month;
+                showMonthEntries(month);
+            });
+        });
+
+
+
+        // Initialize app
+        loadDataFromDatabase();
+        
+        // Auto-refresh data every 30 seconds when viewing recap
+        setInterval(() => {
+            if (!recapSection.classList.contains('hidden')) {
+                loadDataFromDatabase();
+            }
+        }, 30000);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96b50194944187a8',t:'MTc1NDU1MTE3MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
