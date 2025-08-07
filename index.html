@@ -78,6 +78,7 @@
                         <p class="text-purple-200 text-xs">PT Nale System Integrator × Polinema</p>
                     </div>
                 </div>
+
             </div>
         </div>
     </header>
@@ -196,6 +197,8 @@
                         <button type="submit" class="w-full bg-white text-purple-600 font-bold py-3 rounded-xl hover-scale transition-all duration-300 mb-4">
                             Simpan Jurnal
                         </button>
+                        
+
                     </form>
                     
                     <div class="text-center">
@@ -527,11 +530,24 @@
         }
 
         function showPublicRecap() {
-            isLoggedIn = false; // Explicitly ensure public access mode
+            isLoggedIn = false; // Ensure public access
             showSection(recapSection);
             loadDataFromDatabase(); // Refresh data when viewing recap
-            document.getElementById('loggedInButtons').style.display = 'none'; // Hide logged-in buttons
-            document.getElementById('publicButtons').style.display = 'flex'; // Show public buttons
+            // Show only public buttons
+            document.getElementById('loggedInButtons').style.display = 'none';
+            document.getElementById('publicButtons').style.display = 'flex';
+            // Clear any active month tab to force refresh when clicked
+            document.querySelectorAll('.month-tab').forEach(t => {
+                t.classList.remove('bg-white', 'text-purple-600');
+                t.classList.add('glass-effect', 'text-white');
+            });
+            // Clear the table content to force refresh
+            document.getElementById('journalEntries').innerHTML = `
+                <div class="text-center text-white py-8">
+                    <div class="text-6xl mb-4">📝</div>
+                    <p class="text-xl">Pilih bulan untuk melihat jurnal</p>
+                </div>
+            `;
         }
 
         function showJournalForm() {
@@ -674,7 +690,6 @@
                     <div class="text-center text-white py-8">
                         <div class="text-6xl mb-4">📝</div>
                         <p class="text-xl">Belum ada jurnal untuk bulan ${month}</p>
-                        ${!isLoggedIn ? '<p class="text-sm text-purple-200 mt-2">Login untuk mengelola jurnal</p>' : ''}
                     </div>
                 `;
                 return;
@@ -735,11 +750,6 @@
         }
 
         function deleteEntry(entryId) {
-            if (!isLoggedIn) {
-                console.warn('Unauthorized delete attempt');
-                return;
-            }
-            
             // Create custom confirmation dialog
             const confirmDialog = document.createElement('div');
             confirmDialog.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
@@ -857,6 +867,18 @@
             // Show login-specific buttons for logged in users
             document.getElementById('loggedInButtons').style.display = 'flex';
             document.getElementById('publicButtons').style.display = 'none';
+            // Clear any active month tab to force refresh when clicked
+            document.querySelectorAll('.month-tab').forEach(t => {
+                t.classList.remove('bg-white', 'text-purple-600');
+                t.classList.add('glass-effect', 'text-white');
+            });
+            // Clear the table content to force refresh
+            document.getElementById('journalEntries').innerHTML = `
+                <div class="text-center text-white py-8">
+                    <div class="text-6xl mb-4">📝</div>
+                    <p class="text-xl">Pilih bulan untuk melihat jurnal</p>
+                </div>
+            `;
         });
         document.getElementById('backToJournalFromRecap').addEventListener('click', function() {
             if (isLoggedIn) {
@@ -887,6 +909,8 @@
             });
         });
 
+
+
         // Initialize app
         loadDataFromDatabase();
         
@@ -897,5 +921,5 @@
             }
         }, 30000);
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96b580fda71b6bd5',t:'MTc1NDU1NjM5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
