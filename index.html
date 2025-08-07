@@ -536,18 +536,38 @@
             // Show only public buttons
             document.getElementById('loggedInButtons').style.display = 'none';
             document.getElementById('publicButtons').style.display = 'flex';
-            // Clear any active month tab to force refresh when clicked
+            // Clear any active month tab
             document.querySelectorAll('.month-tab').forEach(t => {
                 t.classList.remove('bg-white', 'text-purple-600');
                 t.classList.add('glass-effect', 'text-white');
             });
-            // Clear the table content to force refresh
-            document.getElementById('journalEntries').innerHTML = `
-                <div class="text-center text-white py-8">
-                    <div class="text-6xl mb-4">📝</div>
-                    <p class="text-xl">Pilih bulan untuk melihat jurnal</p>
-                </div>
-            `;
+            // Show all entries by default (Juli first if has data, otherwise show message)
+            setTimeout(() => {
+                const months = ['Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                let foundData = false;
+                
+                for (let month of months) {
+                    const monthEntries = journalEntries.filter(entry => entry.month === month);
+                    if (monthEntries.length > 0) {
+                        // Auto-select first month with data
+                        const tab = document.querySelector(`[data-month="${month}"]`);
+                        tab.classList.remove('glass-effect', 'text-white');
+                        tab.classList.add('bg-white', 'text-purple-600');
+                        showMonthEntries(month);
+                        foundData = true;
+                        break;
+                    }
+                }
+                
+                if (!foundData) {
+                    document.getElementById('journalEntries').innerHTML = `
+                        <div class="text-center text-white py-8">
+                            <div class="text-6xl mb-4">📝</div>
+                            <p class="text-xl">Belum ada jurnal yang tersimpan</p>
+                        </div>
+                    `;
+                }
+            }, 100);
         }
 
         function showJournalForm() {
@@ -867,18 +887,38 @@
             // Show login-specific buttons for logged in users
             document.getElementById('loggedInButtons').style.display = 'flex';
             document.getElementById('publicButtons').style.display = 'none';
-            // Clear any active month tab to force refresh when clicked
+            // Clear any active month tab
             document.querySelectorAll('.month-tab').forEach(t => {
                 t.classList.remove('bg-white', 'text-purple-600');
                 t.classList.add('glass-effect', 'text-white');
             });
-            // Clear the table content to force refresh
-            document.getElementById('journalEntries').innerHTML = `
-                <div class="text-center text-white py-8">
-                    <div class="text-6xl mb-4">📝</div>
-                    <p class="text-xl">Pilih bulan untuk melihat jurnal</p>
-                </div>
-            `;
+            // Show all entries by default (Juli first if has data, otherwise show message)
+            setTimeout(() => {
+                const months = ['Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                let foundData = false;
+                
+                for (let month of months) {
+                    const monthEntries = journalEntries.filter(entry => entry.month === month);
+                    if (monthEntries.length > 0) {
+                        // Auto-select first month with data
+                        const tab = document.querySelector(`[data-month="${month}"]`);
+                        tab.classList.remove('glass-effect', 'text-white');
+                        tab.classList.add('bg-white', 'text-purple-600');
+                        showMonthEntries(month);
+                        foundData = true;
+                        break;
+                    }
+                }
+                
+                if (!foundData) {
+                    document.getElementById('journalEntries').innerHTML = `
+                        <div class="text-center text-white py-8">
+                            <div class="text-6xl mb-4">📝</div>
+                            <p class="text-xl">Belum ada jurnal yang tersimpan</p>
+                        </div>
+                    `;
+                }
+            }, 100);
         });
         document.getElementById('backToJournalFromRecap').addEventListener('click', function() {
             if (isLoggedIn) {
@@ -921,5 +961,5 @@
             }
         }, 30000);
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96b580fda71b6bd5',t:'MTc1NDU1NjM5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96b58f9e2386ce21',t:'MTc1NDU1Njk4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
